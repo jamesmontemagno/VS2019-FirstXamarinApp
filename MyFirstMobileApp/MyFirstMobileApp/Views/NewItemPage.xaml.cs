@@ -18,8 +18,8 @@ namespace MyFirstMobileApp.Views
 
             Item = new Item
             {
-                Text = "Item name",
-                Description = "This is an item description."
+                Text = "",
+                Description = ""
             };
 
             BindingContext = this;
@@ -27,6 +27,9 @@ namespace MyFirstMobileApp.Views
 
         async void Save_Clicked(object sender, EventArgs e)
         {
+            if (string.IsNullOrWhiteSpace(Item.Text) || string.IsNullOrWhiteSpace(Item.Description))
+                return;
+
             MessagingCenter.Send(this, "AddItem", Item);
             await Navigation.PopModalAsync();
         }

@@ -11,9 +11,9 @@ namespace MyFirstMobileApp.Models
 
         public ItemRepository()
         {
-            Add(new Item { Id = Guid.NewGuid().ToString(), Text = "Item 1", Description = "This is an item description." });
-            Add(new Item { Id = Guid.NewGuid().ToString(), Text = "Item 2", Description = "This is an item description." });
-            Add(new Item { Id = Guid.NewGuid().ToString(), Text = "Item 3", Description = "This is an item description." });
+            Add(new Item { Id = Guid.NewGuid().ToString(), Text = "Item 1", Description = "This is an item description.", Icon = "https://raw.githubusercontent.com/jamesmontemagno/VS2019-FirstXamarinApp/master/advocado.png" });
+            Add(new Item { Id = Guid.NewGuid().ToString(), Text = "Item 2", Description = "This is an item description.", Icon = "https://raw.githubusercontent.com/jamesmontemagno/VS2019-FirstXamarinApp/master/advocado.png" });
+            Add(new Item { Id = Guid.NewGuid().ToString(), Text = "Item 3", Description = "This is an item description.", Icon = "https://raw.githubusercontent.com/jamesmontemagno/VS2019-FirstXamarinApp/master/advocado.png" });
         }
 
         public Item Get(string id)

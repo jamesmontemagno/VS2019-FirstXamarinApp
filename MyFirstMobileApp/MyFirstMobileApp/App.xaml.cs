@@ -15,7 +15,7 @@ namespace MyFirstMobileApp
         public static string AzureBackendUrl =
             DeviceInfo.Platform == DevicePlatform.Android ? "http://10.0.2.2:5000" : "http://localhost:5000";
 
-        public static bool UseMockDataStore = true;
+        public static bool UseMockDataStore = false;
 
         public App()
         {

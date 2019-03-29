@@ -27,6 +27,7 @@
                 <x:Array Type="{x:Type models:Item}">
                     <models:Item Text="Tacos"
                                  TextFirst="T"
+                                 Icon="scott.png"
                                  Description="This is the item's description"/>
                     <models:Item Text="Tacos"
                                  TextFirst="T"
@@ -46,17 +47,22 @@
                 <DataTemplate>
                     <ViewCell>
                         <StackLayout Padding="10" Orientation="Horizontal" Spacing="10">
-                            <Frame BackgroundColor="Red"
+                            <Frame d:BackgroundColor="Red"
                                    WidthRequest="50" 
                                    HeightRequest="50"
                                    Padding="0"
                                    HasShadow="True"
                                    Visual="Material"
                                    CornerRadius="5">
-                                <Label Text="{Binding TextFirst}" 
-                                       TextColor="White"
-                                       HorizontalOptions="Center"
-                                       VerticalOptions="Center"/>
+                                <Grid>
+                                    <Image Source="{Binding Icon}" 
+                                           Aspect="AspectFit"
+                                           HorizontalOptions="Center"
+                                           VerticalOptions="Center"/>
+                                    <Label Text="{Binding TextFirst}"
+                                           HorizontalOptions="Center"
+                                           VerticalOptions="Center"/>
+                                </Grid>
                             </Frame>
                             <StackLayout VerticalOptions="Center">
                                 <Label Text="{Binding Text}" 
