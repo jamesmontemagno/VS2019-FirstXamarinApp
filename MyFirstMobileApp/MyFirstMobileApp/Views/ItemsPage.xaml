@@ -1,0 +1,78 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MyFirstMobileApp.Views.ItemsPage"
+              Title="{Binding Title}"
+             x:Name="BrowseItemsPage"
+             xmlns:models="clr-namespace:MyFirstMobileApp.Models"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Add" Clicked="AddItem_Clicked" />
+    </ContentPage.ToolbarItems>
+
+    <StackLayout>
+        <ListView x:Name="ItemsListView"
+                ItemsSource="{Binding Items}"
+                VerticalOptions="FillAndExpand"
+                HasUnevenRows="true"
+                RefreshCommand="{Binding LoadItemsCommand}"
+                IsPullToRefreshEnabled="true"
+                IsRefreshing="{Binding IsBusy, Mode=OneWay}"
+                CachingStrategy="RecycleElement"
+                ItemSelected="OnItemSelected">
+            <d:ListView.ItemsSource>
+                <x:Array Type="{x:Type models:Item}">
+                    <models:Item Text="Tacos"
+                                 TextFirst="T"
+                                 Description="This is the item's description"/>
+                    <models:Item Text="Tacos"
+                                 TextFirst="T"
+                                 Description="This is the item's description"/>
+                    <models:Item Text="Tacos"
+                                 TextFirst="T"
+                                 Description="This is the item's description"/>
+                    <models:Item Text="Tacos"
+                                 TextFirst="T"
+                                 Description="This is the item's description"/>
+                    <models:Item Text="Tacos"
+                                 TextFirst="T"
+                                 Description="This is the item's description"/>
+                </x:Array>
+            </d:ListView.ItemsSource>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <StackLayout Padding="10" Orientation="Horizontal" Spacing="10">
+                            <Frame BackgroundColor="Red"
+                                   WidthRequest="50" 
+                                   HeightRequest="50"
+                                   Padding="0"
+                                   HasShadow="True"
+                                   Visual="Material"
+                                   CornerRadius="5">
+                                <Label Text="{Binding TextFirst}" 
+                                       TextColor="White"
+                                       HorizontalOptions="Center"
+                                       VerticalOptions="Center"/>
+                            </Frame>
+                            <StackLayout VerticalOptions="Center">
+                                <Label Text="{Binding Text}" 
+                                    LineBreakMode="NoWrap" 
+                                    Style="{DynamicResource ListItemTextStyle}" 
+                                    FontSize="16" />
+                                <Label Text="{Binding Description}" 
+                                    LineBreakMode="NoWrap"
+                                    Style="{DynamicResource ListItemDetailTextStyle}"
+                                    FontSize="13" />
+                            </StackLayout>
+                        </StackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </StackLayout>
+    
+</ContentPage>

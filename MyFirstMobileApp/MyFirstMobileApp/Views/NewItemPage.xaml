@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MyFirstMobileApp.Views.NewItemPage"
+             Title="New Item"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             Visual="Material" BackgroundColor="#FFFFFF">
+    
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Cancel" Clicked="Cancel_Clicked" />
+    </ContentPage.ToolbarItems>
+    
+    <ContentPage.Content>
+        <StackLayout Spacing="20" Padding="15" VerticalOptions="FillAndExpand">
+            
+            <Entry Text="{Binding Item.Text}"
+                   d:Text="Item 1"
+                   Placeholder="Text"
+                   d:Placeholder=""
+                   FontSize="Large" />
+            <Editor Text="{Binding Item.Description}"
+                    d:Text="This is a very long long long long description for the item."
+                    d:BackgroundColor="Red"
+                    Placeholder="Description"
+                    d:Placeholder=""
+                    FontSize="Large" Margin="0" />
+
+            <Button Text="Save" 
+                    BackgroundColor="{StaticResource NavigationPrimary}"
+                    VerticalOptions="EndAndExpand"
+                    Clicked="Save_Clicked"
+                    CornerRadius="25"
+                    TextColor="White"/>
+        </StackLayout>
+    </ContentPage.Content>
+    
+</ContentPage>
