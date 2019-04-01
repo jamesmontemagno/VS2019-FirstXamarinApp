@@ -1,8 +1,10 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MyFirstMobileApp.Views.NewItemPage"
              Title="New Item"
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core" 
+             ios:Page.UseSafeArea="true"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
@@ -31,7 +33,7 @@
                     BackgroundColor="{StaticResource NavigationPrimary}"
                     VerticalOptions="EndAndExpand"
                     Clicked="Save_Clicked"
-                    CornerRadius="25"
+                    CornerRadius="15"
                     TextColor="White"/>
         </StackLayout>
     </ContentPage.Content>
