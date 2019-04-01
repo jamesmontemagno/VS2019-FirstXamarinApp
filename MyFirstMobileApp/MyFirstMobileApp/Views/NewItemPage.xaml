@@ -7,34 +7,26 @@
              ios:Page.UseSafeArea="true"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             mc:Ignorable="d"
-             Visual="Material" BackgroundColor="#FFFFFF">
+             mc:Ignorable="d">
     
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Cancel" Clicked="Cancel_Clicked" />
+        <ToolbarItem Text="Save" Clicked="Save_Clicked"/>
     </ContentPage.ToolbarItems>
     
     <ContentPage.Content>
         <StackLayout Spacing="20" Padding="15" VerticalOptions="FillAndExpand">
+
+            <Label Text="Text" FontSize="Medium"/>
             
             <Entry Text="{Binding Item.Text}"
-                   d:Text="Item 1"
-                   Placeholder="Text"
-                   d:Placeholder=""
                    FontSize="Large" />
+            
+            <Label Text="Description" FontSize="Medium"/>
+
             <Editor Text="{Binding Item.Description}"
-                    d:Text="This is a very long long long long description for the item."
-                    d:BackgroundColor="Red"
-                    Placeholder="Description"
-                    d:Placeholder=""
                     FontSize="Large" Margin="0" />
 
-            <Button Text="Save" 
-                    BackgroundColor="{StaticResource NavigationPrimary}"
-                    VerticalOptions="EndAndExpand"
-                    Clicked="Save_Clicked"
-                    CornerRadius="15"
-                    TextColor="White"/>
         </StackLayout>
     </ContentPage.Content>
     
