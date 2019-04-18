@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Xamarin.Essentials;
 using MyFirstMobileApp.Models;
+using Microsoft.Extensions.Logging;
 
 namespace MyFirstMobileApp.Services
 {
@@ -13,10 +14,12 @@ namespace MyFirstMobileApp.Services
     {
         HttpClient client;
         IEnumerable<Item> items;
+        ILogger<AzureDataStore> logger;
 
-        public AzureDataStore()
+        public AzureDataStore(ILogger<AzureDataStore> logger, IHttpClientFactory httpClientFactory)
         {
-            client = new HttpClient();
+            this.logger = logger;
+            client = httpClientFactory.CreateClient();
             client.BaseAddress = new Uri($"{App.AzureBackendUrl}/");
 
             items = new List<Item>();
@@ -25,6 +28,7 @@ namespace MyFirstMobileApp.Services
         bool IsConnected => Connectivity.NetworkAccess == NetworkAccess.Internet;
         public async Task<IEnumerable<Item>> GetItemsAsync(bool forceRefresh = false)
         {
+            logger.LogCritical("Getting items!!! Wow!");
             if (forceRefresh && IsConnected)
             {
                 var json = await client.GetStringAsync($"api/item");
