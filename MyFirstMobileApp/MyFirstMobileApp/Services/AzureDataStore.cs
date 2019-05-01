@@ -19,8 +19,10 @@ namespace MyFirstMobileApp.Services
         public AzureDataStore(ILogger<AzureDataStore> logger = null, IHttpClientFactory httpClientFactory = null)
         {
             this.logger = logger;
-            client = httpClientFactory == null ?  new HttpClient() : httpClientFactory.CreateClient();
-            client.BaseAddress = new Uri($"{App.AzureBackendUrl}/");
+            client = httpClientFactory == null ?  new HttpClient() : httpClientFactory.CreateClient("AzureWebsites");
+
+            if (httpClientFactory == null)
+                client.BaseAddress = new Uri($"{App.AzureBackendUrl}/");
 
             items = new List<Item>();
         }

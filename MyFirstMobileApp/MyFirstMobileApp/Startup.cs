@@ -1,10 +1,12 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Http;
 using Microsoft.Extensions.Logging;
 using MyFirstMobileApp.Services;
 using MyFirstMobileApp.Shared.Models;
 using MyFirstMobileApp.ViewModels;
+using Polly;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -23,20 +25,16 @@ namespace MyFirstMobileApp
             var configLocation = ExtractAppSettings("MyFirstMobileApp.appsettings.json");
 
             var host = new HostBuilder()
-            #region HostConfiguration
                 .ConfigureHostConfiguration(c =>
                 {
                     c.AddCommandLine(new string[] { $"ContentRoot={FileSystem.AppDataDirectory}" });
                     c.AddJsonFile(configLocation);
                 })
                 .ConfigureServices((c, x) => ConfigureServices(c, x))
-            #endregion
-            #region Logging
                 .ConfigureLogging(l => l.AddConsole(o =>
                 {
                     o.DisableColors = true;
                 }))
-            #endregion
                 .Build();
 
             ServiceProvider = host.Services;
@@ -46,7 +44,16 @@ namespace MyFirstMobileApp
         {
             var world = ctx.Configuration["Hello"];
 
-            services.AddHttpClient();
+            services.AddHttpClient("AzureWebsites", client => 
+                {
+                    client.BaseAddress = new Uri(App.AzureBackendUrl);
+                })
+                .AddTransientHttpErrorPolicy(builder => builder.WaitAndRetryAsync(new[]
+                {
+                    TimeSpan.FromSeconds(1),
+                    TimeSpan.FromSeconds(5),
+                    TimeSpan.FromSeconds(10)
+                }));
 
             if (ctx.HostingEnvironment.IsDevelopment())
                 services.AddSingleton<IDataStore<Item>, MockDataStore>();
