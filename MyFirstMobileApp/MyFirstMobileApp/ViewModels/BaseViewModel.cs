@@ -7,14 +7,25 @@ using Microsoft.Extensions.DependencyInjection;
 
 using Xamarin.Forms;
 
-using MyFirstMobileApp.Models;
+using MyFirstMobileApp.Shared.Models;
 using MyFirstMobileApp.Services;
 
 namespace MyFirstMobileApp.ViewModels
 {
     public class BaseViewModel : INotifyPropertyChanged
     {
-        public IDataStore<Item> DataStore => App.ServiceProvider.GetService<IDataStore<Item>>() ?? new MockDataStore();
+        IDataStore<Item> dataStore;
+        public IDataStore<Item> DataStore
+        {
+            get
+            {
+                if (dataStore != null)
+                    return dataStore;
+                dataStore = DependencyService.Get<IDataStore<Item>>();
+                return dataStore;
+            }
+            set => dataStore = value;
+        }
 
         bool isBusy = false;
         public bool IsBusy

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-using MyFirstMobileApp.Models;
+using MyFirstMobileApp.Shared.Models;
 using MyFirstMobileApp.Views;
 using MyFirstMobileApp.ViewModels;
 
@@ -21,7 +21,7 @@ namespace MyFirstMobileApp.Views
         {
             InitializeComponent();
 
-            BindingContext = viewModel = new ItemsViewModel();
+            BindingContext = viewModel = Startup.ServiceProvider?.GetService<ItemsViewModel>() ?? new ItemsViewModel();
         }
 
         async void OnItemSelected(object sender, SelectedItemChangedEventArgs args)

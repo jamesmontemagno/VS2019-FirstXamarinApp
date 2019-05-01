@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.AspNetCore.Mvc;
-
 using MyFirstMobileApp.Models;
+using MyFirstMobileApp.Shared.Models;
 
 namespace MyFirstMobileApp.Controllers
 {

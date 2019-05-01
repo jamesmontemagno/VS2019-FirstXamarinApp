@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-using MyFirstMobileApp.Models;
+using MyFirstMobileApp.Shared.Models;
 
 namespace MyFirstMobileApp.Views
 {

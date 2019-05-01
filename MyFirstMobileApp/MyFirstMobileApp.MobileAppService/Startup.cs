@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Swashbuckle.AspNetCore.Swagger;
 
+using MyFirstMobileApp.Shared.Models;
 using MyFirstMobileApp.Models;
 
 namespace MyFirstMobileApp.MobileAppService
