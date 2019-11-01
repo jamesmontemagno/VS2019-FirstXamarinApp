@@ -22,13 +22,14 @@ namespace MyFirstMobileApp
 
         public static void Init()
         {
-            var configLocation = ExtractAppSettings("MyFirstMobileApp.appsettings.json");
+            var a = Assembly.GetExecutingAssembly();
+            using var stream = a.GetManifestResourceStream("MyFirstMobileApp.appsettings.json");
 
             var host = new HostBuilder()
                 .ConfigureHostConfiguration(c =>
                 {
                     c.AddCommandLine(new string[] { $"ContentRoot={FileSystem.AppDataDirectory}" });
-                    c.AddJsonFile(configLocation);
+                    c.AddJsonStream(stream);
                 })
                 .ConfigureServices((c, x) => ConfigureServices(c, x))
                 .ConfigureLogging(l => l.AddConsole(o =>
@@ -61,27 +62,6 @@ namespace MyFirstMobileApp
                 services.AddSingleton<IDataStore<Item>, AzureDataStore>();
 
             services.AddTransient<ItemsViewModel>();
-        }
-
-        public static string ExtractAppSettings(string filename)
-        {
-            var location = FileSystem.CacheDirectory;
-            string full = null;
-            var a = Assembly.GetExecutingAssembly();
-            using (var resFilestream = a.GetManifestResourceStream(filename))
-            {
-                if (resFilestream != null)
-                {
-                    full = Path.Combine(location, filename);
-
-                    using (var stream = File.Create(full))
-                    {
-                        resFilestream.CopyTo(stream);
-                    }
-                }
-            }
-
-            return full;
         }
     }
 }
