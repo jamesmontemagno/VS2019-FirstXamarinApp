@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Http;
 using Microsoft.Extensions.Logging;
+using MyFirstMobileApp.Models;
 using MyFirstMobileApp.Services;
 using MyFirstMobileApp.Shared.Models;
 using MyFirstMobileApp.ViewModels;
@@ -57,9 +58,9 @@ namespace MyFirstMobileApp
                 }));
 
             if (ctx.HostingEnvironment.IsDevelopment())
-                services.AddSingleton<IDataStore<Item>, MockDataStore>();
+                services.AddSingleton<IRepository<Item>, MockDataStore>();
             else
-                services.AddSingleton<IDataStore<Item>, AzureDataStore>();
+                services.AddSingleton<IRepository<Item>, AzureDataStore>();
 
             services.AddTransient<ItemsViewModel>();
         }

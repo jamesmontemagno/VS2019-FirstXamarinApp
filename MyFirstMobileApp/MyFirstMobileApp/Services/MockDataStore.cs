@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MyFirstMobileApp.Models;
 using MyFirstMobileApp.Shared.Models;
 
 namespace MyFirstMobileApp.Services
 {
-    public class MockDataStore : IDataStore<Item>
+    public class MockDataStore : IRepository<Item>
     {
         List<Item> items;
 
@@ -29,14 +30,14 @@ namespace MyFirstMobileApp.Services
             }
         }
 
-        public async Task<bool> AddItemAsync(Item item)
+        public async Task<bool> Add(Item item)
         {
             items.Add(item);
 
             return await Task.FromResult(true);
         }
 
-        public async Task<bool> UpdateItemAsync(Item item)
+        public async Task<bool> Update(Item item)
         {
             var oldItem = items.Where((Item arg) => arg.Id == item.Id).FirstOrDefault();
             items.Remove(oldItem);
@@ -45,7 +46,7 @@ namespace MyFirstMobileApp.Services
             return await Task.FromResult(true);
         }
 
-        public async Task<bool> DeleteItemAsync(string id)
+        public async Task<bool> Remove(string id)
         {
             var oldItem = items.Where((Item arg) => arg.Id == id).FirstOrDefault();
             items.Remove(oldItem);
@@ -53,12 +54,12 @@ namespace MyFirstMobileApp.Services
             return await Task.FromResult(true);
         }
 
-        public async Task<Item> GetItemAsync(string id)
+        public async Task<Item> Get(string id)
         {
             return await Task.FromResult(items.FirstOrDefault(s => s.Id == id));
         }
 
-        public async Task<IEnumerable<Item>> GetItemsAsync(bool forceRefresh = false)
+        public async Task<IEnumerable<Item>> GetAll()
         {
             return await Task.FromResult(items);
         }

@@ -106,7 +106,7 @@
       <Name>MyFirstMobileApp.Shared</Name>
     </ProjectReference>
     <ProjectReference Include="..\MyFirstMobileApp\MyFirstMobileApp.csproj">
-      <Project>{FF855BC7-9FF5-47C5-ABF9-EAE05B725B22}</Project>
+      <Project>{92B6B541-24C2-4886-A481-0D629892DAAC}</Project>
       <Name>MyFirstMobileApp</Name>
     </ProjectReference>
   </ItemGroup>

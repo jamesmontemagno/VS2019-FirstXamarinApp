@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using MyFirstMobileApp.Models;
+using MyFirstMobileApp.Shared.Models;
 
 namespace MyFirstMobileApp.MobileAppService
 {
@@ -31,7 +32,7 @@ namespace MyFirstMobileApp.MobileAppService
                 .WithOrigins("http://localhost:5002");
             }));
 
-            services.AddSingleton<IItemRepository, ItemRepository>();
+            services.AddSingleton<IRepository<Item>, ItemRepository>();
 
             services.AddSwaggerGen(c =>
             {
