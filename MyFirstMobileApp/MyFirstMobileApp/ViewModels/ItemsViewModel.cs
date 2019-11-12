@@ -5,8 +5,10 @@ using System.Threading.Tasks;
 
 using Xamarin.Forms;
 
-using MyFirstMobileApp.Models;
+using MyFirstMobileApp.Shared.Models;
 using MyFirstMobileApp.Views;
+using MyFirstMobileApp.Services;
+using MyFirstMobileApp.Models;
 
 namespace MyFirstMobileApp.ViewModels
 {
@@ -15,8 +17,9 @@ namespace MyFirstMobileApp.ViewModels
         public ObservableCollection<Item> Items { get; set; }
         public Command LoadItemsCommand { get; set; }
 
-        public ItemsViewModel()
+        public ItemsViewModel(IRepository<Item> store = null)
         {
+            DataStore = store;
             Title = "Browse";
             Items = new ObservableCollection<Item>();
             LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
@@ -25,7 +28,7 @@ namespace MyFirstMobileApp.ViewModels
             {
                 var newItem = item as Item;
                 Items.Add(newItem);
-                await DataStore.AddItemAsync(newItem);
+                await DataStore.Add(newItem);
             });
         }
 
@@ -39,7 +42,7 @@ namespace MyFirstMobileApp.ViewModels
             try
             {
                 Items.Clear();
-                var items = await DataStore.GetItemsAsync(true);
+                var items = await DataStore.GetAll();
                 foreach (var item in items)
                 {
                     Items.Add(item);

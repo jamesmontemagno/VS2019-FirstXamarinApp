@@ -1,11 +1,10 @@
 ﻿using Newtonsoft.Json;
 using System;
 
-namespace MyFirstMobileApp.Models
+namespace MyFirstMobileApp.Shared.Models
 {
     public class Item
     {
-
         public string Id { get; set; }
         public string Text { get; set; }
         public string Description { get; set; }
@@ -19,7 +18,7 @@ namespace MyFirstMobileApp.Models
             {
                 if (!string.IsNullOrWhiteSpace(Icon))
                     return string.Empty;
-                if(first == null)
+                if (first == null)
                 {
                     first = Text?.Substring(0, 1) ?? string.Empty;
                 }

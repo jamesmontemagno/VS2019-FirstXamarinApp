@@ -1,6 +1,6 @@
 ﻿using System;
 
-using MyFirstMobileApp.Models;
+using MyFirstMobileApp.Shared.Models;
 
 namespace MyFirstMobileApp.ViewModels
 {

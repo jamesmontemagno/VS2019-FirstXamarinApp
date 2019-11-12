@@ -1,7 +1,8 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-
 using MyFirstMobileApp.Models;
+using MyFirstMobileApp.Shared.Models;
 
 namespace MyFirstMobileApp.Controllers
 {
@@ -9,28 +10,28 @@ namespace MyFirstMobileApp.Controllers
     public class ItemController : Controller
     {
 
-        private readonly IItemRepository ItemRepository;
+        private readonly IRepository<Item> ItemRepository;
 
-        public ItemController(IItemRepository itemRepository)
+        public ItemController(IRepository<Item> itemRepository)
         {
             ItemRepository = itemRepository;
         }
 
         [HttpGet]
-        public IActionResult List()
+        public async Task<IActionResult> List()
         {
-            return Ok(ItemRepository.GetAll());
+            return Ok(value: await ItemRepository.GetAll());
         }
 
         [HttpGet("{id}")]
-        public Item GetItem(string id)
+        public async Task<Item> GetItem(string id)
         {
-            Item item = ItemRepository.Get(id);
+            Item item = await ItemRepository.Get(id);
             return item;
         }
 
         [HttpPost]
-        public IActionResult Create([FromBody]Item item)
+        public async Task<IActionResult> Create([FromBody]Item item)
         {
             try
             {
@@ -39,7 +40,7 @@ namespace MyFirstMobileApp.Controllers
                     return BadRequest("Invalid State");
                 }
 
-                ItemRepository.Add(item);
+                await ItemRepository.Add(item);
 
             }
             catch (Exception)
@@ -50,7 +51,7 @@ namespace MyFirstMobileApp.Controllers
         }
 
         [HttpPut]
-        public IActionResult Edit([FromBody] Item item)
+        public async Task<IActionResult> Edit([FromBody] Item item)
         {
             try
             {
@@ -58,7 +59,7 @@ namespace MyFirstMobileApp.Controllers
                 {
                     return BadRequest("Invalid State");
                 }
-                ItemRepository.Update(item);
+                await ItemRepository.Update(item);
             }
             catch (Exception)
             {
@@ -68,9 +69,9 @@ namespace MyFirstMobileApp.Controllers
         }
 
         [HttpDelete("{id}")]
-        public void Delete(string id)
+        public async Task Delete(string id)
         {
-            ItemRepository.Remove(id);
+            await ItemRepository.Remove(id);
         }
     }
 }

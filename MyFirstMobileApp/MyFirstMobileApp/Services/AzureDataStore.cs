@@ -5,27 +5,34 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Xamarin.Essentials;
+using MyFirstMobileApp.Shared.Models;
+using Microsoft.Extensions.Logging;
 using MyFirstMobileApp.Models;
 
 namespace MyFirstMobileApp.Services
 {
-    public class AzureDataStore : IDataStore<Item>
+    public class AzureDataStore : IRepository<Item>
     {
         HttpClient client;
         IEnumerable<Item> items;
+        ILogger<AzureDataStore> logger;
 
-        public AzureDataStore()
+        public AzureDataStore(ILogger<AzureDataStore> logger = null, IHttpClientFactory httpClientFactory = null)
         {
-            client = new HttpClient();
-            client.BaseAddress = new Uri($"{App.AzureBackendUrl}/");
+            this.logger = logger;
+            client = httpClientFactory == null ?  new HttpClient() : httpClientFactory.CreateClient("AzureWebsites");
+
+            if (httpClientFactory == null)
+                client.BaseAddress = new Uri($"{App.AzureBackendUrl}/");
 
             items = new List<Item>();
         }
 
         bool IsConnected => Connectivity.NetworkAccess == NetworkAccess.Internet;
-        public async Task<IEnumerable<Item>> GetItemsAsync(bool forceRefresh = false)
+        public async Task<IEnumerable<Item>> GetAll()
         {
-            if (forceRefresh && IsConnected)
+            logger?.LogCritical("Getting items!!! Wow!");
+            if (IsConnected)
             {
                 var json = await client.GetStringAsync($"api/item");
                 items = await Task.Run(() => JsonConvert.DeserializeObject<IEnumerable<Item>>(json));
@@ -34,7 +41,7 @@ namespace MyFirstMobileApp.Services
             return items;
         }
 
-        public async Task<Item> GetItemAsync(string id)
+        public async Task<Item> Get(string id)
         {
             if (id != null && IsConnected)
             {
@@ -45,7 +52,7 @@ namespace MyFirstMobileApp.Services
             return null;
         }
 
-        public async Task<bool> AddItemAsync(Item item)
+        public async Task<bool> Add(Item item)
         {
             if (item == null || !IsConnected)
                 return false;
@@ -57,7 +64,7 @@ namespace MyFirstMobileApp.Services
             return response.IsSuccessStatusCode;
         }
 
-        public async Task<bool> UpdateItemAsync(Item item)
+        public async Task<bool> Update(Item item)
         {
             if (item == null || item.Id == null || !IsConnected)
                 return false;
@@ -71,7 +78,7 @@ namespace MyFirstMobileApp.Services
             return response.IsSuccessStatusCode;
         }
 
-        public async Task<bool> DeleteItemAsync(string id)
+        public async Task<bool> Remove(string id)
         {
             if (string.IsNullOrEmpty(id) && !IsConnected)
                 return false;
